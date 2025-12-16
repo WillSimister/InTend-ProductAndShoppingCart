@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InTend-ProductAndShoppingCa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InTend-ProductAndShoppingCart.Business", "InTend-ProductAndShoppingCart.Business\InTend-ProductAndShoppingCart.Business.csproj", "{730EB4AE-1349-4B90-BAC7-00C6F1A77BC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InTend-ProductAndShoppingCart.Common", "InTend-ProductAndShoppingCart.Common\InTend-ProductAndShoppingCart.Common.csproj", "{2FD5933D-7B95-45E3-8997-959058CBA891}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{730EB4AE-1349-4B90-BAC7-00C6F1A77BC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{730EB4AE-1349-4B90-BAC7-00C6F1A77BC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{730EB4AE-1349-4B90-BAC7-00C6F1A77BC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD5933D-7B95-45E3-8997-959058CBA891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD5933D-7B95-45E3-8997-959058CBA891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD5933D-7B95-45E3-8997-959058CBA891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD5933D-7B95-45E3-8997-959058CBA891}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

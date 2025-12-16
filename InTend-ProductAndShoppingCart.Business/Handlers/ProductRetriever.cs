@@ -23,9 +23,16 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
 
         public Models.Product GetProductById(Guid productId)
         {
+            Validation.ProductInputValidator.ValidateId(productId);
             return Models.Product.FromDataModel(
                 _productRepository
                 .GetProductById(productId));
+        }
+
+        public int GetProductStock(Guid productId)
+        {
+            Validation.ProductInputValidator.ValidateId(productId);
+            return _productRepository.GetProductStock(productId);
         }
     }
 }
