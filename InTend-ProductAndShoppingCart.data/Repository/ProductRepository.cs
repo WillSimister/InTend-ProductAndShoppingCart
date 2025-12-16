@@ -31,10 +31,13 @@ namespace InTend_ProductAndShoppingCart.Repository
             return Products;
         }
 
-        public Product? GetProductById(Guid productId)
+        public Product GetProductById(Guid productId)
         {
-            Products.TryGetValue(productId, out var product);
-            return product;
+            if (Products.TryGetValue(productId, out var product))
+            {
+                return product;
+            }
+            throw new KeyNotFoundException($"Product with ID {productId} not found.");
         }
 
         public Product AddProduct(string name, decimal price, string description)

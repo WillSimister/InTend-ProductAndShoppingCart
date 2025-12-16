@@ -39,26 +39,62 @@ public class ProductController : ControllerBase
     [HttpPut("{productGuid}/name", Name = "UpdateName")]
     public IActionResult UpdateName(Guid productGuid, [FromQuery] string name)
     {
-        return Ok(_productApi.UpdateName(productGuid, name));
+        try
+        {
+            return Ok(_productApi.UpdateName(productGuid, name));
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
     }
 
     [HttpPut("{productGuid}/price", Name = "UpdatePrice")]
     public IActionResult UpdatePrice(Guid productGuid, [FromQuery] decimal price)
     {
-        return Ok(_productApi.UpdatePrice(productGuid, price));
+        try
+        {
+            return Ok(_productApi.UpdatePrice(productGuid, price));
+        }
+        catch (KeyNotFoundException)
+        {
+            // See below Controller Endpoint for discussion on NotFound with messages
+            return NotFound();
+        }
     }
 
     [HttpPut("{productId}/description", Name = "UpdateDescription")]
     public IActionResult UpdateDescription(Guid productId, [FromQuery] string description)
     {
-        return Ok(_productApi.UpdateDescription(productId, description));
+        try
+        {
+            return Ok(_productApi.UpdateDescription(productId, description));
+        }
+        catch (KeyNotFoundException)
+        {
+            // See below Controller Endpoint for discussion on NotFound with message
+            return NotFound();
+        }
     }
 
     [HttpDelete("{productId}", Name = "DeleteProduct")]
     public IActionResult DeleteProduct(Guid productId)
     {
-        _productApi.DeleteProduct(productId);
-        return Ok();
+        try
+        {
+            _productApi.DeleteProduct(productId);
+            return Ok();
+        }
+        catch (KeyNotFoundException)
+        {
+            // I want to caveat this final call to NotFound with a message, I have read articles arguing
+            // for and against doing this, but I think it's more user friendly to provide some context.
+            // however it does potentially leak information about the existence of resources, so in a real world scenario
+            // I would discuss this with the team to decide on the best approach
+            return NotFound(new
+            {
+                error = $"Product with ID '{productId}' not found."
+            });
+        }
     }
-
 }
