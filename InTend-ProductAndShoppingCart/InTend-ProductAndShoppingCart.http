@@ -1,0 +1,6 @@
+@InTend_ProductAndShoppingCart_HostAddress = http://localhost:5115
+
+GET {{InTend_ProductAndShoppingCart_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
