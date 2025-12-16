@@ -27,5 +27,10 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
                 _productRepository
                 .GetProductById(productId));
         }
+
+        public int GetProductStock(Guid productId)
+        {
+            return _productRepository.GetProductStock(productId);
+        }
     }
 }

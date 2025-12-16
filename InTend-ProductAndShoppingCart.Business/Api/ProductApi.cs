@@ -7,10 +7,12 @@ namespace InTend_ProductAndShoppingCart.Business.Api
     public class ProductApi
     {
         private readonly ProductRetriever _productRetriever;
+        private readonly ProductHandler _productHandler;
 
         public ProductApi(ProductRepository productRepository)
         {
             _productRetriever = new ProductRetriever(productRepository);
+            _productHandler = new ProductHandler(productRepository);
         }
 
         public IReadOnlyDictionary<Guid, Product> GetAll()
@@ -28,6 +30,21 @@ namespace InTend_ProductAndShoppingCart.Business.Api
             }
 
             return product;
+        }
+
+        internal int GetProductStockQuantity(Guid productId)
+        {
+            return _productRetriever.GetProductStock(productId);
+        }
+
+        internal void IncreaseProductStock(Guid productId, int stockToAdd)
+        {
+            _productHandler.increaseProductStock(productId, stockToAdd);
+        }
+
+        internal void DecreaseProductStock(Guid productId, int stockToRemove)
+        {
+            _productHandler.DecreaseProductStock(productId, stockToRemove);
         }
     }
 }

@@ -6,7 +6,8 @@ namespace InTend_ProductAndShoppingCart.Business.Models
             Guid Id,
             string Name,
             decimal Price,
-            string? Description
+            string? Description,
+            bool IsAvailable
         )
     {
         public static Product FromDataModel(Data.DataModels.Product dataModel)
@@ -15,7 +16,8 @@ namespace InTend_ProductAndShoppingCart.Business.Models
                 dataModel.Id,
                 dataModel.Name,
                 dataModel.Price,
-                dataModel.Description
+                dataModel.Description,
+                dataModel.UnitsInStock > 0
             );
         }
     }

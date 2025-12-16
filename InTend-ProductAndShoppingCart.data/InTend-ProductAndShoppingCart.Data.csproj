@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InTend-ProductAndShoppingCart.Common\InTend-ProductAndShoppingCart.Common.csproj" />
+  </ItemGroup>
+
 </Project>

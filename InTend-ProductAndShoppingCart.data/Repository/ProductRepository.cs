@@ -1,4 +1,5 @@
-﻿using InTend_ProductAndShoppingCart.Data.DataModels;
+﻿using InTend_ProductAndShoppingCart.Business.Exceptions;
+using InTend_ProductAndShoppingCart.Data.DataModels;
 
 namespace InTend_ProductAndShoppingCart.Repository
 {
@@ -38,6 +39,45 @@ namespace InTend_ProductAndShoppingCart.Repository
                 return product;
             }
             throw new KeyNotFoundException($"Product with ID {productId} not found.");
+        }
+
+        public int GetProductStock(Guid productId)
+        {
+            if (Products.TryGetValue(productId, out var product))
+            {
+                return product.UnitsInStock;
+            }
+            throw new KeyNotFoundException($"Product with ID {productId} not found.");
+        }
+
+        public void InreaseProductStock(Guid productId, int stockToAdd)
+        {
+            if (Products.TryGetValue(productId, out var product))
+            {
+                var updatedProduct = product with { UnitsInStock = product.UnitsInStock + stockToAdd };
+                Products[productId] = updatedProduct;
+            }
+            else
+            {
+                throw new KeyNotFoundException($"Product with ID {productId} not found.");
+            }
+        }
+
+        public void DecreaseProductStock(Guid productId, int stockToRemove)
+        {
+            if (Products.TryGetValue(productId, out var product))
+            {
+                if (product.UnitsInStock - stockToRemove < 0)
+                {
+                    throw new ItemOutOfStockException(productId, product.UnitsInStock, stockToRemove);
+                }
+                var updatedProduct = product with { UnitsInStock = product.UnitsInStock - stockToRemove };
+                Products[productId] = updatedProduct;
+            }
+            else
+            {
+                throw new KeyNotFoundException($"Product with ID {productId} not found.");
+            }
         }
     }
 }
