@@ -1,10 +1,15 @@
-using InTend_ProductAndShoppingCart.Repository;
+using InTend_ProductAndShoppingCart.Business.Api;
+using InTend_ProductAndShoppingCart.Business.Repository;
+using InTend_ProductAndShoppingCart.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Initialise and populate the mock product repository
-ProductRepository.Instance.PopulateProducts();
+
+builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>();
+builder.Services.AddScoped<ProductApi>();
+builder.Services.AddScoped<ShoppingCartApi>();
+
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

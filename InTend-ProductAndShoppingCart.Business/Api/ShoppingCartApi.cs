@@ -1,5 +1,6 @@
 ﻿using InTend_ProductAndShoppingCart.Business.Handlers;
-using InTend_ProductAndShoppingCart.data.Repository;
+using InTend_ProductAndShoppingCart.Business.Models.Business;
+using InTend_ProductAndShoppingCart.Business.Repository;
 
 namespace InTend_ProductAndShoppingCart.Business.Api
 {
@@ -9,14 +10,14 @@ namespace InTend_ProductAndShoppingCart.Business.Api
         private readonly ShoppingCartRetriever _shoppingCartRetriever;
         private readonly ProductApi _productApi;
 
-        public ShoppingCartApi(ShoppingCartRepository shoppingCartRepository, ProductApi productApi) 
+        public ShoppingCartApi(IShoppingCartRepository shoppingCartRepository, ProductApi productApi) 
         {
             _shoppingCartHandler = new ShoppingCartHandler(shoppingCartRepository);
             _shoppingCartRetriever = new ShoppingCartRetriever(shoppingCartRepository, productApi.GetAll());
             _productApi = productApi;
         }
 
-        public Models.ShoppingCart GetShoppingCart()
+        public ShoppingCart GetShoppingCart()
         {
             return _shoppingCartRetriever.GetShoppingCart();
         }
@@ -57,6 +58,17 @@ namespace InTend_ProductAndShoppingCart.Business.Api
 
             _shoppingCartHandler.RemoveItemQuantityFromCart(productId, quantity);
             _productApi.IncreaseProductStock(productId, quantity);
+        }
+
+        public void ClearCart()
+        {
+            var cartContents = _shoppingCartRetriever.GetCartContents();
+
+            foreach (var item in cartContents)
+            {
+                _productApi.IncreaseProductStock(item.Key, item.Value);
+            }
+            _shoppingCartHandler.ClearCart();
         }
     }
 }

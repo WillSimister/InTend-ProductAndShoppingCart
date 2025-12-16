@@ -1,7 +1,7 @@
 ﻿using InTend_ProductAndShoppingCart.Repository;
 using Microsoft.AspNetCore.Mvc;
-using InTend_ProductAndShoppingCart.Business.Models;
 using InTend_ProductAndShoppingCart.data.Repository;
+using InTend_ProductAndShoppingCart.Business.Models.Business;
 
 namespace InTend_ProductAndShoppingCart.Controllers;
 

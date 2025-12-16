@@ -1,14 +1,14 @@
-﻿using InTend_ProductAndShoppingCart.Business.Models;
-using InTend_ProductAndShoppingCart.data.Repository;
+﻿using InTend_ProductAndShoppingCart.Business.Models.Business;
+using InTend_ProductAndShoppingCart.Business.Repository;
 
 namespace InTend_ProductAndShoppingCart.Business.Handlers
 {
     internal class ShoppingCartRetriever
     {
-        private readonly ShoppingCartRepository _shoppingCartRepository;
+        private readonly IShoppingCartRepository _shoppingCartRepository;
         private readonly IReadOnlyDictionary<Guid, Product> _productLookup;
 
-        internal ShoppingCartRetriever(ShoppingCartRepository shoppingCartRepository, IReadOnlyDictionary<Guid, Product> productLookup)
+        internal ShoppingCartRetriever(IShoppingCartRepository shoppingCartRepository, IReadOnlyDictionary<Guid, Product> productLookup)
         {
             _shoppingCartRepository = shoppingCartRepository;
             _productLookup = productLookup;
@@ -38,6 +38,11 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
         {
             var cartContents = _shoppingCartRepository.GetCartContents();
             return cartContents.TryGetValue(productGuid, out var quantity) ? quantity : 0;
+        }
+
+        public IReadOnlyDictionary<Guid, int> GetCartContents()
+        {
+            return _shoppingCartRepository.GetCartContents();
         }
     }
 }

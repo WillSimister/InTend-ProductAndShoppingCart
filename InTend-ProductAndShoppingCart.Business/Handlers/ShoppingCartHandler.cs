@@ -1,14 +1,12 @@
-﻿using InTend_ProductAndShoppingCart.Business.Api;
-using InTend_ProductAndShoppingCart.data.Repository;
+﻿using InTend_ProductAndShoppingCart.Business.Repository;
 
 namespace InTend_ProductAndShoppingCart.Business.Handlers
 {
     internal class ShoppingCartHandler
     {
-        private readonly ShoppingCartRepository _shoppingCartRepository;
+        private readonly IShoppingCartRepository _shoppingCartRepository;
 
-        internal ShoppingCartHandler(
-            ShoppingCartRepository shoppingCartRepository)
+        internal ShoppingCartHandler(IShoppingCartRepository shoppingCartRepository)
         {
             _shoppingCartRepository = shoppingCartRepository;
         }
@@ -26,6 +24,11 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
         internal void RemoveItemQuantityFromCart(Guid productId, int quantity)
         {
             _shoppingCartRepository.RemoveItemQuantityFromCart(productId, quantity);
+        }
+
+        internal void ClearCart()
+        {
+            _shoppingCartRepository.ClearCart();
         }
     }
 }
