@@ -35,9 +35,14 @@ public class ShoppingCartController : ControllerBase
             _shoppingCartApi.AddToCart(productId, quantity);
             return Ok();
         }
-        catch (KeyNotFoundException ex)
+        catch (KeyNotFoundException)
         {
-            return NotFound(ex.Message);
+            return NotFound(new { error = $"Product with ID '{productId}' not found." });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving product with ID {ProductId}", productId);
+            return StatusCode(500, new { error = "An unexpected error occurred." });
         }
     }
 
@@ -49,9 +54,14 @@ public class ShoppingCartController : ControllerBase
             _shoppingCartApi.RemoveItemQuantityFromCart(productId, quantity);
             return Ok();
         }
-        catch (KeyNotFoundException ex)
+        catch (KeyNotFoundException)
         {
-            return NotFound(ex.Message);
+            return NotFound(new { error = $"Product with ID '{productId}' not found." });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving product with ID {ProductId}", productId);
+            return StatusCode(500, new { error = "An unexpected error occurred." });
         }
     }
 
@@ -63,9 +73,14 @@ public class ShoppingCartController : ControllerBase
             _shoppingCartApi.RemoveItemFromCart(productId);
             return Ok();
         }
-        catch (KeyNotFoundException ex)
+        catch (KeyNotFoundException)
         {
-            return NotFound(ex.Message);
+            return NotFound(new { error = $"Product with ID '{productId}' not found." });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving product with ID {ProductId}", productId);
+            return StatusCode(500, new { error = "An unexpected error occurred." });
         }
     }
 }

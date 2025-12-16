@@ -25,8 +25,21 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("{productId}", Name = "GetById")]
-    public Product GetById(Guid productId)
+    public IActionResult GetById(Guid productId)
     {
-        return _productApi.GetById(productId);
+        try
+        {
+            var product = _productApi.GetById(productId);
+            return Ok(product);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound(new { error = $"Product with ID '{productId}' not found." });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving product with ID {ProductId}", productId);
+            return StatusCode(500, new { error = "An unexpected error occurred." });
+        }
     }
 }

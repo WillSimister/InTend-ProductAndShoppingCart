@@ -23,6 +23,8 @@ namespace InTend_ProductAndShoppingCart.Business.Api
 
         public void AddToCart(Guid productId, int? quantity)
         {
+            Validation.ProductInputValidator.ValidateId(productId);
+
             int itemQuantityInStock = _productApi.GetProductStockQuantity(productId);
 
             bool itemHasEnoughStock = Validation.ShoppingCartValidation.ItemHasEnoughStock(
@@ -39,6 +41,8 @@ namespace InTend_ProductAndShoppingCart.Business.Api
 
         public void RemoveItemFromCart(Guid productId)
         {
+            Validation.ProductInputValidator.ValidateId(productId);
+
             int quantityInCart = _shoppingCartRetriever.GetQuantityOfItemInCart(productId);
 
             _shoppingCartHandler.RemoveItemFromCart(productId);
@@ -47,6 +51,8 @@ namespace InTend_ProductAndShoppingCart.Business.Api
 
         public void RemoveItemQuantityFromCart(Guid productId, int quantity)
         {
+            Validation.ProductInputValidator.ValidateId(productId);
+
             int quantityInCart = _shoppingCartRetriever.GetQuantityOfItemInCart(productId);
 
             _shoppingCartHandler.RemoveItemQuantityFromCart(productId, quantity);

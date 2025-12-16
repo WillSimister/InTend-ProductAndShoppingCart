@@ -39,6 +39,7 @@ namespace InTend_ProductAndShoppingCart.Business.Api
 
         internal void IncreaseProductStock(Guid productId, int stockToAdd)
         {
+            Validation.ProductInputValidator.ValidateId(productId);
             _productHandler.increaseProductStock(productId, stockToAdd);
         }
 
