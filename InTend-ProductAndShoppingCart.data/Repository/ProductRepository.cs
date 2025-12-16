@@ -39,53 +39,5 @@ namespace InTend_ProductAndShoppingCart.Repository
             }
             throw new KeyNotFoundException($"Product with ID {productId} not found.");
         }
-
-        public Product AddProduct(string name, decimal price, string description)
-        {
-            var newProduct = new Product(Guid.NewGuid(), name, price, description);
-            Products[newProduct.Id] = newProduct;
-            return Products[newProduct.Id];
-        }
-
-        public Product UpdateName(Guid productGuid, string name)
-        {
-            if (Products.TryGetValue(productGuid, out var product))
-            {
-                var updatedProduct = product with { Name = name };
-                Products[productGuid] = updatedProduct;
-                return updatedProduct;
-            }
-            throw new KeyNotFoundException($"Product with ID {productGuid} not found.");
-        }
-
-        public Product UpdatePrice(Guid productGuid, decimal price)
-        {
-            if (Products.TryGetValue(productGuid, out var product))
-            {
-                var updatedProduct = product with { Price = price };
-                Products[productGuid] = updatedProduct;
-                return updatedProduct;
-            }
-            throw new KeyNotFoundException($"Product with ID {productGuid} not found.");
-        }
-
-        public Product UpdateDescription(Guid productGuid, string description)
-        {
-            if (Products.TryGetValue(productGuid, out var product))
-            {
-                var updatedProduct = product with { Description = description };
-                Products[productGuid] = updatedProduct;
-                return updatedProduct;
-            }
-            throw new KeyNotFoundException($"Product with ID {productGuid} not found.");
-        }
-
-        public void DeleteProduct(Guid productGuid)
-        {
-            if (!Products.Remove(productGuid))
-            {
-                throw new KeyNotFoundException($"Product with ID {productGuid} not found.");
-            }
-        }
     }
 }

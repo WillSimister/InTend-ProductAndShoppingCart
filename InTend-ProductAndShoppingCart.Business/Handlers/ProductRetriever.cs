@@ -15,22 +15,17 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
         {
             var dataProducts = _productRepository.GetAllProducts();
 
-            var businessProducts = dataProducts.ToDictionary(
+            return dataProducts.ToDictionary(
                 kvp => kvp.Key,
                 kvp => Models.Product.FromDataModel(kvp.Value)
             );
-            return businessProducts;
         }
 
-        public Models.Product? GetProductById(Guid productId)
+        public Models.Product GetProductById(Guid productId)
         {
-            var dataProduct = _productRepository.GetAllProducts()
-                .Values
-                .FirstOrDefault(p => p.Id == productId);
-
-            return dataProduct == null
-                ? null
-                : Models.Product.FromDataModel(dataProduct);
+            return Models.Product.FromDataModel(
+                _productRepository
+                .GetProductById(productId));
         }
     }
 }
