@@ -5,6 +5,10 @@ VisualStudioVersion = 17.13.35818.85 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InTend-ProductAndShoppingCart", "InTend-ProductAndShoppingCart\InTend-ProductAndShoppingCart.csproj", "{37C71ADF-9876-417C-8EA9-A0F1E577FA85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InTend-ProductAndShoppingCart.Data", "InTend-ProductAndShoppingCart.data\InTend-ProductAndShoppingCart.Data.csproj", "{C50C606D-DFCE-448B-98B5-D60E3E98CE88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InTend-ProductAndShoppingCart.Business", "InTend-ProductAndShoppingCart.Business\InTend-ProductAndShoppingCart.Business.csproj", "{730EB4AE-1349-4B90-BAC7-00C6F1A77BC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{37C71ADF-9876-417C-8EA9-A0F1E577FA85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37C71ADF-9876-417C-8EA9-A0F1E577FA85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37C71ADF-9876-417C-8EA9-A0F1E577FA85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C50C606D-DFCE-448B-98B5-D60E3E98CE88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C50C606D-DFCE-448B-98B5-D60E3E98CE88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C50C606D-DFCE-448B-98B5-D60E3E98CE88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C50C606D-DFCE-448B-98B5-D60E3E98CE88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{730EB4AE-1349-4B90-BAC7-00C6F1A77BC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{730EB4AE-1349-4B90-BAC7-00C6F1A77BC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{730EB4AE-1349-4B90-BAC7-00C6F1A77BC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{730EB4AE-1349-4B90-BAC7-00C6F1A77BC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
