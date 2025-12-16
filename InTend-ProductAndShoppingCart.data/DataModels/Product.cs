@@ -10,5 +10,6 @@ namespace InTend_ProductAndShoppingCart.Data.DataModels
        Guid Id,
        string Name,
        decimal Price,
-       string? Description);
+       string? Description,
+       int UnitsInStock);
 }
