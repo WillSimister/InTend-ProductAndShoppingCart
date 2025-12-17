@@ -1,4 +1,6 @@
+using InTend_ProductAndShoppingCart.Business.Api;
 using InTend_ProductAndShoppingCart.Business.Models.Business;
+using InTend_ProductAndShoppingCart.Business.Repository;
 using InTend_ProductAndShoppingCart.Data.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,20 +14,21 @@ public class ProductController : ControllerBase
     private readonly Business.Api.ProductApi _productApi;
 
     public ProductController(
-        ILogger<ProductController> logger)
+        ILogger<ProductController> logger,
+        IProductRepository productRepository)
     {
         _logger = logger;
-        _productApi = new Business.Api.ProductApi(ProductRepository.Instance);
+        _productApi = new ProductApi(productRepository);
     }
 
-    [HttpGet(Name = "GetAll")]
-    public IReadOnlyDictionary<Guid, Product> GetAll()
+    [HttpGet(Name = "AllProducts")]
+    public IReadOnlyDictionary<Guid, Product> AllProducts()
     {
         return _productApi.GetAll();
     }
 
-    [HttpGet("{productId}", Name = "GetById")]
-    public IActionResult GetById(Guid productId)
+    [HttpGet("{productId}", Name = "ProductById")]
+    public IActionResult ProductById(Guid productId)
     {
         try
         {

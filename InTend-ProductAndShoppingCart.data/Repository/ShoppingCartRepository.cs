@@ -1,27 +1,62 @@
-﻿using InTend_ProductAndShoppingCart.Business.Repository;
+﻿using InTend_ProductAndShoppingCart.Business.Models.Business;
+using InTend_ProductAndShoppingCart.Business.Repository;
 
 namespace InTend_ProductAndShoppingCart.Data.Repository
 {
     public class ShoppingCartRepository : IShoppingCartRepository
     {
-        // Singleton instance
-        private static readonly Lazy<ShoppingCartRepository> _instance = new(() => new ShoppingCartRepository());
-
-        // Public accessor for the singleton instance
-        public static ShoppingCartRepository Instance => _instance.Value;
-
-        public ShoppingCartRepository() { }
-
-        private readonly Dictionary<Guid, int> ShoppingCart = new();
-        
-        public IReadOnlyDictionary<Guid, int> GetCartContents()
+        public ShoppingCartRepository()
         {
-            return ShoppingCart;
+        }
+
+        private readonly Dictionary<Guid, int> shoppingCart = new();
+
+        public IReadOnlyList<ShoppingCartItem> GetCartContents(IReadOnlyDictionary<Guid, Product> _productLookup)
+        {
+            var shoppingCartItems = new List<ShoppingCartItem>();
+
+            foreach (var item in shoppingCart)
+            {
+                if (_productLookup.TryGetValue(item.Key, out var product))
+                {
+                    shoppingCartItems.Add(new ShoppingCartItem(product, item.Value));
+                }
+            }
+
+            return shoppingCartItems;
         }
 
         public Dictionary<Guid, int> GetShoppingCart()
         {
-            return ShoppingCart;
+            return shoppingCart;
+        }
+
+        public decimal GetCartTotal(IReadOnlyDictionary<Guid, Product> productLookup)
+        {
+            decimal total = 0m;
+            foreach (var item in shoppingCart)
+            {
+                Guid productId = item.Key;
+                int quantity = item.Value;
+                decimal price = productLookup.ContainsKey(productId) ? productLookup[productId].Price : 0m;
+                total += price * quantity;
+            }
+            return total;
+        }
+
+        public int GetQuantityOfItemInCart(Guid productId)
+        {
+            return shoppingCart.ContainsKey(productId) ? shoppingCart[productId] : 0;
+        }
+
+        public int GetTotalProductsInCart()
+        {
+            int totalItems = 0;
+            foreach (var quantity in shoppingCart.Values)
+            {
+                totalItems += quantity;
+            }
+            return totalItems;
         }
 
         public void AddToCart(Guid productId, int? quantity)
@@ -29,21 +64,21 @@ namespace InTend_ProductAndShoppingCart.Data.Repository
             // If quantity is null or less than 1, default to 1
             int validatedQuantity = quantity.HasValue && quantity.Value > 0 ? quantity.Value : 1;
 
-            if (ShoppingCart.ContainsKey(productId))
+            if (shoppingCart.ContainsKey(productId))
             {
-                ShoppingCart[productId] += validatedQuantity;
+                shoppingCart[productId] += validatedQuantity;
             }
             else
             {
-                ShoppingCart[productId] = validatedQuantity;
+                shoppingCart[productId] = validatedQuantity;
             }
         }
 
         public void RemoveItemFromCart(Guid productId)
         {
-            if (ShoppingCart.ContainsKey(productId))
+            if (shoppingCart.ContainsKey(productId))
             {
-                ShoppingCart.Remove(productId);
+                shoppingCart.Remove(productId);
             }
             else
             {
@@ -54,26 +89,25 @@ namespace InTend_ProductAndShoppingCart.Data.Repository
         public void RemoveItemQuantityFromCart
             (Guid productId, int? quantity)
         {
-            if (!ShoppingCart.ContainsKey(productId))
+            if (!shoppingCart.ContainsKey(productId))
             {
                 throw new KeyNotFoundException($"Product with ID {productId} not found in the shopping cart.");
             }
 
             // If quantity is null or less than 1, default to 1
             int validatedQuantity = quantity.HasValue && quantity.Value > 0 ? quantity.Value : 1;
-            ShoppingCart[productId] -= validatedQuantity;
+            shoppingCart[productId] -= validatedQuantity;
 
             // If the quantity drops to 0 or below, remove the item from the cart
-            if (ShoppingCart[productId] <= 0)
+            if (shoppingCart[productId] <= 0)
             {
-                ShoppingCart.Remove(productId);
+                shoppingCart.Remove(productId);
             }
         }
 
         public void ClearCart()
         {
-            ShoppingCart.Clear();
+            shoppingCart.Clear();
         }
-
     }
 }

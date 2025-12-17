@@ -10,7 +10,8 @@ builder.Services.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>()
 builder.Services.AddScoped<ProductApi>();
 builder.Services.AddScoped<ShoppingCartApi>();
 
-ProductRepository.Instance.PopulateProducts();
+//Here I need to call the singleton to populate products at application start
+
 
 builder.Services.AddControllers();
 

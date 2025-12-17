@@ -16,33 +16,22 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
 
         internal ShoppingCart GetShoppingCart()
         {
-            var cartContents = _shoppingCartRepository.GetCartContents();
+            var cartContents = _shoppingCartRepository.GetCartContents(_productLookup);
+            var totalProducts = _shoppingCartRepository.GetTotalProductsInCart();
+            var totalPrice = _shoppingCartRepository.GetCartTotal(_productLookup);
 
-            var shoppingCartItems = new List<ShoppingCartItem>();
-
-            foreach (var item in cartContents)
-            {
-                if (_productLookup.TryGetValue(item.Key, out var product))
-                {
-                    shoppingCartItems.Add(new ShoppingCartItem(product, item.Value, product.Price * item.Value));
-                }
-            }
-
-            int totalProducts = shoppingCartItems.Sum(i => i.Quantity);
-            decimal totalPrice = shoppingCartItems.Sum(i => i.Product.Price * i.Quantity);
-
-            return new ShoppingCart(shoppingCartItems, totalProducts, totalPrice);
+            return new ShoppingCart(cartContents, totalProducts, totalPrice);
         }
 
         internal int GetQuantityOfItemInCart(Guid productGuid)
         {
-            var cartContents = _shoppingCartRepository.GetCartContents();
-            return cartContents.TryGetValue(productGuid, out var quantity) ? quantity : 0;
+            return _shoppingCartRepository.GetQuantityOfItemInCart(productGuid);
         }
 
         internal IReadOnlyDictionary<Guid, int> GetCartContents()
         {
-            return _shoppingCartRepository.GetCartContents();
+            return _shoppingCartRepository.GetCartContents(_productLookup)
+                .ToDictionary(item => item.Product.Id, item => item.Quantity);
         }
     }
 }

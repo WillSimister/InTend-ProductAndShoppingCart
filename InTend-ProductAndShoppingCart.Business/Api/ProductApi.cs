@@ -22,12 +22,7 @@ namespace InTend_ProductAndShoppingCart.Business.Api
 
         public Product GetById(Guid productId)
         {
-            Product? product = _productRetriever.GetProductById(productId);
-
-            if (product == null)
-            {
-                throw new KeyNotFoundException($"Product with ID {productId} not found.");
-            }
+            Product product = _productRetriever.GetProductById(productId);
 
             return product;
         }

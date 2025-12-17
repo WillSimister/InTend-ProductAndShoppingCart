@@ -2,15 +2,9 @@
 using InTend_ProductAndShoppingCart.Business.Api;
 using InTend_ProductAndShoppingCart.Business.Exceptions;
 using InTend_ProductAndShoppingCart.Business.Models.Business;
-using InTend_ProductAndShoppingCart.Business.Models.Data;
 using InTend_ProductAndShoppingCart.Business.Repository;
 using InTend_ProductAndShoppingCart.Data.Repository;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InTend_ProductAndShoppingCart.Business.Test.Api
 {
@@ -20,9 +14,16 @@ namespace InTend_ProductAndShoppingCart.Business.Test.Api
         private IShoppingCartRepository _shoppingCartRepo = null!;
         private IProductRepository _productRepo = null!;
         private IReadOnlyDictionary<Guid, Product> _productLookup = null!;
+        private ProductApi _productApi = null!;
+        private ShoppingCartApi _shoppingCartApi = null!;
 
         private Guid _testGuidOne = Guid.Parse("11111111-1111-1111-1111-111111111111");
         private Guid _testGuidTwo = Guid.Parse("22222222-2222-2222-2222-222222222222");
+
+        public ProductApiTests()
+        {
+            // Parameterless constructor required by MSTest
+        }
 
         [TestInitialize]
         public void Setup()
@@ -36,16 +37,15 @@ namespace InTend_ProductAndShoppingCart.Business.Test.Api
 
             _productRepo = provider.GetRequiredService<IProductRepository>();
             _shoppingCartRepo = provider.GetRequiredService<IShoppingCartRepository>();
-
-            _productRepo.PopulateProducts();
-            _productLookup = new ProductApi(_productRepo).GetAll();
+            _productApi = new ProductApi(_productRepo);
+            _shoppingCartApi = new ShoppingCartApi(_shoppingCartRepo, _productApi);
+            _productLookup = _productApi.GetAll();
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            _shoppingCartRepo.ClearCart();
-            _productRepo.PopulateProducts();
+            _shoppingCartApi.ClearCart();
         }
 
         [TestMethod]

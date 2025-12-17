@@ -1,4 +1,5 @@
 ﻿using InTend_ProductAndShoppingCart.Business.Models.Business;
+using InTend_ProductAndShoppingCart.Business.Repository;
 using InTend_ProductAndShoppingCart.Data.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,21 +14,23 @@ public class ShoppingCartController : ControllerBase
     private readonly Business.Api.ShoppingCartApi _shoppingCartApi;
 
     public ShoppingCartController(
-        ILogger<ShoppingCartController> logger)
+        ILogger<ShoppingCartController> logger,
+        IShoppingCartRepository shoppingCartRepository,
+        IProductRepository productRepository)
     {
         _logger = logger;
-        _productApi = new Business.Api.ProductApi(ProductRepository.Instance);
-        _shoppingCartApi = new Business.Api.ShoppingCartApi(ShoppingCartRepository.Instance, _productApi);
+        _productApi = new Business.Api.ProductApi(productRepository);
+        _shoppingCartApi = new Business.Api.ShoppingCartApi(shoppingCartRepository, _productApi);
     }
 
-    [HttpGet(Name = "GetShoppingCart")]
-    public ShoppingCart GetShoppingCart()
+    [HttpGet(Name = "ShoppingCart")]
+    public ShoppingCart ShoppingCart()
     {
         return _shoppingCartApi.GetShoppingCart();
     }
 
-    [HttpPost(Name = "AddItemToCart")]
-    public IActionResult AddItemToCart([FromQuery] Guid productId, [FromQuery] int? quantity)
+    [HttpPost("{productId}", Name = "AddItemToCart")]
+    public IActionResult AddItemToCart(Guid productId, [FromQuery] int? quantity = null)
     {
         try
         {
@@ -45,8 +48,8 @@ public class ShoppingCartController : ControllerBase
         }
     }
 
-    [HttpPut("{productId}", Name = "RemoveItemQuantityFromCart")]
-    public IActionResult RemoveItemQuantityFromCart(Guid productId, [FromQuery] int quantity)
+    [HttpPut("{productId}/quantity/{quantity}", Name = "RemoveItemQuantityFromCart")]
+    public IActionResult RemoveItemQuantityFromCart(Guid productId, int quantity)
     {
         try
         {

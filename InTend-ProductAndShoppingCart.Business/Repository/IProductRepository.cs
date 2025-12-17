@@ -9,9 +9,5 @@ namespace InTend_ProductAndShoppingCart.Business.Repository
         public int GetProductStock(Guid productId);
         public void InreaseProductStock(Guid productId, int stockToAdd);
         public void DecreaseProductStock(Guid productId, int stockToRemove);
-
-        // For testing purposes
-        public void PopulateProducts();
-
     }
 }
