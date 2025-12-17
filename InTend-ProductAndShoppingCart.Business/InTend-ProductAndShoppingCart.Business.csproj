@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InTend-ProductAndShoppingCart.Common\InTend-ProductAndShoppingCart.Common.csproj" />
-    <ProjectReference Include="..\InTend-ProductAndShoppingCart.data\InTend-ProductAndShoppingCart.Data.csproj" />
   </ItemGroup>
 
 </Project>

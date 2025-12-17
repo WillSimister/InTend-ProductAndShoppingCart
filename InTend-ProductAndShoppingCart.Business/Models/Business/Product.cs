@@ -1,6 +1,9 @@
 ﻿#nullable enable
 
-namespace InTend_ProductAndShoppingCart.Business.Models
+using InTend_ProductAndShoppingCart;
+using InTend_ProductAndShoppingCart.Business.Models.Data;
+
+namespace InTend_ProductAndShoppingCart.Business.Models.Business
 {
     public record Product(
             Guid Id,
@@ -10,7 +13,7 @@ namespace InTend_ProductAndShoppingCart.Business.Models
             bool IsAvailable
         )
     {
-        public static Product FromDataModel(Data.DataModels.Product dataModel)
+        public static Product FromDataModel(ProductData dataModel)
         {
             return new Product(
                 dataModel.Id,

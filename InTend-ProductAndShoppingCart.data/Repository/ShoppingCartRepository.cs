@@ -1,15 +1,8 @@
-﻿using InTend_ProductAndShoppingCart.data.DataModels;
-using InTend_ProductAndShoppingCart.Data.DataModels;
-using InTend_ProductAndShoppingCart.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InTend_ProductAndShoppingCart.Business.Repository;
 
-namespace InTend_ProductAndShoppingCart.data.Repository
+namespace InTend_ProductAndShoppingCart.Data.Repository
 {
-    public class ShoppingCartRepository
+    public class ShoppingCartRepository : IShoppingCartRepository
     {
         // Singleton instance
         private static readonly Lazy<ShoppingCartRepository> _instance = new(() => new ShoppingCartRepository());
@@ -17,8 +10,7 @@ namespace InTend_ProductAndShoppingCart.data.Repository
         // Public accessor for the singleton instance
         public static ShoppingCartRepository Instance => _instance.Value;
 
-        // Private constructor to prevent external instantiation
-        private ShoppingCartRepository() { }
+        public ShoppingCartRepository() { }
 
         private readonly Dictionary<Guid, int> ShoppingCart = new();
         

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InTend_ProductAndShoppingCart.Data.DataModels
+namespace InTend_ProductAndShoppingCart.Business.Models.Data
 {
-    public record Product(
+    public record ProductData(
        Guid Id,
        string Name,
        decimal Price,

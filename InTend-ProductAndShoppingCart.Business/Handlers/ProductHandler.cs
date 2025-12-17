@@ -1,17 +1,12 @@
-﻿using InTend_ProductAndShoppingCart.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InTend_ProductAndShoppingCart.Business.Repository;
 
 namespace InTend_ProductAndShoppingCart.Business.Handlers
 {
     internal class ProductHandler
     {
-        private readonly ProductRepository _productRepository;
+        private readonly IProductRepository _productRepository;
 
-        internal ProductHandler(ProductRepository productRepository)
+        internal ProductHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }

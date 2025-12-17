@@ -1,30 +1,31 @@
-﻿using InTend_ProductAndShoppingCart.Repository;
+﻿using InTend_ProductAndShoppingCart.Business.Models.Business;
+using InTend_ProductAndShoppingCart.Business.Repository;
 
 namespace InTend_ProductAndShoppingCart.Business.Handlers
 {
     internal class ProductRetriever
     {
-        private readonly ProductRepository _productRepository;
+        private readonly IProductRepository _productRepository;
 
-        internal ProductRetriever(ProductRepository productRepository)
+        internal ProductRetriever(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
 
-        public IReadOnlyDictionary<Guid, Models.Product> GetAllProducts()
+        public IReadOnlyDictionary<Guid, Product> GetAllProducts()
         {
             var dataProducts = _productRepository.GetAllProducts();
 
             return dataProducts.ToDictionary(
                 kvp => kvp.Key,
-                kvp => Models.Product.FromDataModel(kvp.Value)
+                kvp => Product.FromDataModel(kvp.Value)
             );
         }
 
-        public Models.Product GetProductById(Guid productId)
+        public Product GetProductById(Guid productId)
         {
             Validation.ProductInputValidator.ValidateId(productId);
-            return Models.Product.FromDataModel(
+            return Product.FromDataModel(
                 _productRepository
                 .GetProductById(productId));
         }

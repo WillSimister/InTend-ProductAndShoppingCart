@@ -1,6 +1,6 @@
 ﻿using InTend_ProductAndShoppingCart.Business.Handlers;
-using InTend_ProductAndShoppingCart.Business.Models;
-using InTend_ProductAndShoppingCart.Repository;
+using InTend_ProductAndShoppingCart.Business.Models.Business;
+using InTend_ProductAndShoppingCart.Business.Repository;
 
 namespace InTend_ProductAndShoppingCart.Business.Api
 {
@@ -9,7 +9,7 @@ namespace InTend_ProductAndShoppingCart.Business.Api
         private readonly ProductRetriever _productRetriever;
         private readonly ProductHandler _productHandler;
 
-        public ProductApi(ProductRepository productRepository)
+        public ProductApi(IProductRepository productRepository)
         {
             _productRetriever = new ProductRetriever(productRepository);
             _productHandler = new ProductHandler(productRepository);
@@ -32,18 +32,18 @@ namespace InTend_ProductAndShoppingCart.Business.Api
             return product;
         }
 
-        internal int GetProductStockQuantity(Guid productId)
+        public int GetProductStockQuantity(Guid productId)
         {
             return _productRetriever.GetProductStock(productId);
         }
 
-        internal void IncreaseProductStock(Guid productId, int stockToAdd)
+        public void IncreaseProductStock(Guid productId, int stockToAdd)
         {
             Validation.ProductInputValidator.ValidateId(productId);
             _productHandler.increaseProductStock(productId, stockToAdd);
         }
 
-        internal void DecreaseProductStock(Guid productId, int stockToRemove)
+        public void DecreaseProductStock(Guid productId, int stockToRemove)
         {
             _productHandler.DecreaseProductStock(productId, stockToRemove);
         }
