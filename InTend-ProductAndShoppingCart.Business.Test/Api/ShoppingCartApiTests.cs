@@ -63,7 +63,7 @@ public class ShoppingCartApiTests
     }
 
     [TestMethod]
-    public void AddToCart_GivenInvalidProductId_ThrowsException()
+    public void AddToCart_GivenInvalidProductId_ThrowsKeyNotFoundException()
     {
         ShoppingCartApi shoppingCartApi = new(_shoppingCartRepo, new ProductApi(_productRepo));
 
@@ -189,7 +189,7 @@ public class ShoppingCartApiTests
     }
 
     [TestMethod]
-    public void RemoveItemFromCart_GivenInvalidProductId_ThrowsException()
+    public void RemoveItemFromCart_GivenInvalidProductId_ThrowsKeyNotFoundException()
     {
         ShoppingCartApi shoppingCartApi = new(_shoppingCartRepo, new ProductApi(_productRepo));
         // Arrange
@@ -217,7 +217,7 @@ public class ShoppingCartApiTests
     }
 
     [TestMethod]
-    public void RemoveItemQuantityFromCart_GivenInvalidProductId_ThrowsException()
+    public void RemoveItemQuantityFromCart_GivenInvalidProductId_ThrowsKeyNotFoundException()
     {
         ShoppingCartApi shoppingCartApi = new(_shoppingCartRepo, new ProductApi(_productRepo));
         // Arrange

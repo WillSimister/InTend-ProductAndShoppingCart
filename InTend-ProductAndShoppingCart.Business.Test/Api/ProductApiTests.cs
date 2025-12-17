@@ -63,7 +63,7 @@ namespace InTend_ProductAndShoppingCart.Business.Test.Api
         }
 
         [TestMethod]
-        public void GetProductById_GivenInvalidNotFountId_ThrowsArgumentException()
+        public void GetProductById_GivenInvalidNotFountId_ThrowsKeyNotFoundException()
         {
             // Arrange
             ProductApi productApi = new(_productRepo);
@@ -104,7 +104,7 @@ namespace InTend_ProductAndShoppingCart.Business.Test.Api
         }
 
         [TestMethod]
-        public void GetProductStockQuantity_GivenInvalidId_ThrowsArgumentException()
+        public void GetProductStockQuantity_GivenInvalidId_ThrowsKeyNotFoundException()
         {
             // Arrange
             ProductApi productApi = new(_productRepo);
@@ -131,7 +131,7 @@ namespace InTend_ProductAndShoppingCart.Business.Test.Api
         }
 
         [TestMethod]
-        public void IncreaseProductStock_GivenInvalidId_ThrowsArgumentException()
+        public void IncreaseProductStock_GivenInvalidId_ThrowsKeyNotFoundException()
         {
             // Arrange
             ProductApi productApi = new(_productRepo);
@@ -157,7 +157,7 @@ namespace InTend_ProductAndShoppingCart.Business.Test.Api
         }
 
         [TestMethod]
-        public void DecreaseProductStock_GivenInvalidId_ThrowsArgumentException()
+        public void DecreaseProductStock_GivenInvalidId_ThrowsKeyNotFoundException()
         {
             // Arrange
             ProductApi productApi = new(_productRepo);
@@ -169,7 +169,7 @@ namespace InTend_ProductAndShoppingCart.Business.Test.Api
         }
 
         [TestMethod]
-        public void DecreaseProductStock_GivenInsufficientStock_ThrowsInvalidOperationException()
+        public void DecreaseProductStock_GivenInsufficientStock_ThrowsItemOutOfStockException()
         {
             // Arrange
             ProductApi productApi = new(_productRepo);
