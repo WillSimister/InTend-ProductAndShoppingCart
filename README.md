@@ -56,10 +56,16 @@ I have assumed that in these requirements, product images are not needed.
 
 I have assumed that the products do not have categories or any other special types and that all products in the requirements are treated equally.
 
+I have assumed that the system is only used in the UK, so currency and currency calculation is not an issue.
+
+I have assumed that there are no special offers or special offer systems. 
+
 # Design pattern justification
 For the overarching project I have opted for the Repository Pattern to fulfill data access. This pattern lends its self well to CRUD systems and is easy to maintain. It also makes it easy to DI the Repositories in for Testing purposes. 
 
 Another reason to use the Repository pattern here is that it is already a nuanced and slightly complex system, which in the real world would likely grow legs and balloon. The repository pattern helps keep the code base clean and easily maintanable, which is needed for scalability.
+
+This design pattern lends its self well to future feature requirements. Whilst developing I had ideas for both discount and currency handlers. Theses could be added as modules/services and the getTotal method on the repository could operate via these services to handle this functionality, most importantly this could be done without having to change the current implementation (Much at least).
 
 I have opted to completely decouple the application just as it is how I always write code at the moment, it probably wasn't completely necessary for a system this small. 
 - We have a Web Layer which contains Controllers and the method of DI I have opted for is controller injection and feed down.
@@ -87,10 +93,11 @@ The data layer contains nothing much other than repositories. These are what wou
 
 # I have also created a small project called .common, in here I have added a Custom Exception as I got carried away, not necessary, but it does add a lot of context to an exception over the generic ones.
 
-# Testising
+# Testing
 
 I have set up two unit test files, one testing each api. I have opted not to go further or to put as much thought as I would have liked to into the tests as at this point I have been working on this project for a little longer than I had anticipated. If I had more time, I would like to set up testing context builders and methods in the repositories to allow me to have control over what is in the product store. And some common testing data builders for commonly used scenarios. Apologies if they are slightly messy.
 
+The tests are not exhaustive and not all files that should have tests have tests at this stage as time is limited.
 
 
 
