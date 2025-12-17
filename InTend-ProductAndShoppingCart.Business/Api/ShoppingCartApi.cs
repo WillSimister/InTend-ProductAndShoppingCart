@@ -26,6 +26,9 @@ namespace InTend_ProductAndShoppingCart.Business.Api
         {
             Validation.ProductInputValidator.ValidateId(productId);
 
+            if (quantity.HasValue)
+                Validation.ProductInputValidator.ValidateQuantity(quantity.Value);
+
             int itemQuantityInStock = _productApi.GetProductStockQuantity(productId);
 
             bool itemHasEnoughStock = Validation.ShoppingCartValidation.ItemHasEnoughStock(
@@ -53,6 +56,7 @@ namespace InTend_ProductAndShoppingCart.Business.Api
         public void RemoveItemQuantityFromCart(Guid productId, int quantity)
         {
             Validation.ProductInputValidator.ValidateId(productId);
+            Validation.ProductInputValidator.ValidateQuantity(quantity);
 
             int quantityInCart = _shoppingCartRetriever.GetQuantityOfItemInCart(productId);
 

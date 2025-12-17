@@ -22,9 +22,9 @@ namespace InTend_ProductAndShoppingCart.Business.Api
 
         public Product GetById(Guid productId)
         {
-            Product product = _productRetriever.GetProductById(productId);
+            Validation.ProductInputValidator.ValidateId(productId);
 
-            return product;
+            return _productRetriever.GetProductById(productId);
         }
 
         public int GetProductStockQuantity(Guid productId)
@@ -35,11 +35,16 @@ namespace InTend_ProductAndShoppingCart.Business.Api
         public void IncreaseProductStock(Guid productId, int stockToAdd)
         {
             Validation.ProductInputValidator.ValidateId(productId);
+            Validation.ProductInputValidator.ValidateQuantity(stockToAdd);
+
             _productHandler.increaseProductStock(productId, stockToAdd);
         }
 
         public void DecreaseProductStock(Guid productId, int stockToRemove)
         {
+            Validation.ProductInputValidator.ValidateId(productId);
+            Validation.ProductInputValidator.ValidateQuantity(stockToRemove);
+
             _productHandler.DecreaseProductStock(productId, stockToRemove);
         }
     }

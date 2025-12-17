@@ -26,7 +26,15 @@ public class ShoppingCartController : ControllerBase
     [HttpGet(Name = "ShoppingCart")]
     public ShoppingCart ShoppingCart()
     {
-        return _shoppingCartApi.GetShoppingCart();
+        try
+        {
+            return _shoppingCartApi.GetShoppingCart();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving the shopping cart");
+            throw;
+        }
     }
 
     [HttpPost("{productId}", Name = "AddItemToCart")]
