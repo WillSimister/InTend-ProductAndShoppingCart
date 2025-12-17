@@ -1,5 +1,6 @@
 # InTend-ProductAndShoppingCart
-Thankyou for the opportunity to complete the technical test
+Thankyou for the opportunity to complete the technical test.
+
 In this document there will be instructions on how to run the application and a brief overview of design patterns decisions and overview of assumptions made about the broader requirements.
 
 # Running the application
@@ -11,7 +12,9 @@ Either clone the Repo from this repository, or alternatively I will have sent ov
 
 # System Overview
 This is a closed system with an in memory repository for both a collection of products and a shopping cart.
+
 For Products - There is functionality to view a collection of all products or to get a product by its ID.
+
 For the Shopping Cart - There is functionality to view your shopping cart, add a product to your shopping cart, remove a product from your cart, increase and decrease a products quantity and finally to clear the your cart.
 
 # Endpoints and their usage
@@ -95,7 +98,11 @@ The data layer contains nothing much other than repositories. These are what wou
 
 # Testing
 
-I have set up two unit test files, one testing each api. I have opted not to go further or to put as much thought as I would have liked to into the tests as at this point I have been working on this project for a little longer than I had anticipated. If I had more time, I would like to set up testing context builders and methods in the repositories to allow me to have control over what is in the product store. And some common testing data builders for commonly used scenarios. Apologies if they are slightly messy.
+I have set up two unit test files, one testing each api.
+
+I have opted not to go further or to put as much thought as I would have liked to into the tests as at this point I have been working on this project for a little longer than I had anticipated.
+
+If I had more time, I would like to set up testing context builders and methods in the repositories to allow me to have control over what is in the product store. And some common testing data builders for commonly used scenarios. Apologies if they are slightly messy.
 
 The tests are not exhaustive and not all files that should have tests have tests at this stage as time is limited.
 
