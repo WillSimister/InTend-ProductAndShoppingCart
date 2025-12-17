@@ -91,6 +91,7 @@ The data layer contains nothing much other than repositories. These are what wou
 
 I have set up two unit test files, one testing each api. I have opted not to go further or to put as much thought as I would have liked to into the tests as at this point I have been working on this project for a little longer than I had anticipated. If I had more time, I would like to set up testing context builders and methods in the repositories to allow me to have control over what is in the product store. And some common testing data builders for commonly used scenarios. Apologies if they are slightly messy.
 
+The tests are not exhaustive and not all files that should have tests have tests at this stage as time is limited.
 
 
 
