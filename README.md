@@ -45,8 +45,8 @@ There are two controllers created: `ProductController` and `ShoppingCartControll
 - **[DELETE]** `/ShoppingCart/RemoveItemFromCart/{ProductID}`  
   Will remove all of an item from the cart.
 
-- **[DELETE]** `/ShoppingCart/ClearCart/{ProductID}`  
-  Will remove all of an item from the cart.
+- **[DELETE]** `/ShoppingCart/ClearCart` 
+  Will remove all items from the cart.
 
 ## List of Endpoints with Queries to Test in Order
 
