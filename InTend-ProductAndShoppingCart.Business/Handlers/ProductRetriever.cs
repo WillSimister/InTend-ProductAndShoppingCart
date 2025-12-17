@@ -12,7 +12,7 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
             _productRepository = productRepository;
         }
 
-        public IReadOnlyDictionary<Guid, Product> GetAllProducts()
+        internal IReadOnlyDictionary<Guid, Product> GetAllProducts()
         {
             var dataProducts = _productRepository.GetAllProducts();
 
@@ -22,7 +22,7 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
             );
         }
 
-        public Product GetProductById(Guid productId)
+        internal Product GetProductById(Guid productId)
         {
             Validation.ProductInputValidator.ValidateId(productId);
             return Product.FromDataModel(
@@ -30,7 +30,7 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
                 .GetProductById(productId));
         }
 
-        public int GetProductStock(Guid productId)
+        internal int GetProductStock(Guid productId)
         {
             Validation.ProductInputValidator.ValidateId(productId);
             return _productRepository.GetProductStock(productId);

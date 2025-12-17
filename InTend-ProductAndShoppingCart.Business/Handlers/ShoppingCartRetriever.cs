@@ -14,7 +14,7 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
             _productLookup = productLookup;
         }
 
-        public ShoppingCart GetShoppingCart()
+        internal ShoppingCart GetShoppingCart()
         {
             var cartContents = _shoppingCartRepository.GetCartContents();
 
@@ -34,13 +34,13 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
             return new ShoppingCart(shoppingCartItems, totalProducts, totalPrice);
         }
 
-        public int GetQuantityOfItemInCart(Guid productGuid)
+        internal int GetQuantityOfItemInCart(Guid productGuid)
         {
             var cartContents = _shoppingCartRepository.GetCartContents();
             return cartContents.TryGetValue(productGuid, out var quantity) ? quantity : 0;
         }
 
-        public IReadOnlyDictionary<Guid, int> GetCartContents()
+        internal IReadOnlyDictionary<Guid, int> GetCartContents()
         {
             return _shoppingCartRepository.GetCartContents();
         }

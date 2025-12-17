@@ -20,7 +20,7 @@ namespace InTend_ProductAndShoppingCart.Business.Models.Business
                 dataModel.Name,
                 dataModel.Price,
                 dataModel.Description,
-                dataModel.UnitsInStock > 0
+                dataModel.UnitsInStock > 0 //Decided on this over showing actual stock level as this is how most e-commerce sites act
             );
         }
     }

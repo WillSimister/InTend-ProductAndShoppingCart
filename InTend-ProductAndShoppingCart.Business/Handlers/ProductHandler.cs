@@ -11,12 +11,12 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
             _productRepository = productRepository;
         }
 
-        public void increaseProductStock(Guid productId, int stockToAdd)
+        internal void increaseProductStock(Guid productId, int stockToAdd)
         {
             _productRepository.InreaseProductStock(productId, stockToAdd);
         }
 
-        public void DecreaseProductStock(Guid productId, int stockToRemove)
+        internal void DecreaseProductStock(Guid productId, int stockToRemove)
         {
             _productRepository.DecreaseProductStock(productId, stockToRemove);
         }
