@@ -22,6 +22,7 @@ There are two controllers that have been created ProductController and ShoppingC
 
 # Product Controller
 https://localhost:7101/Product/GetAll - Will return a list of Products
+
 https://localhost:7101/Product/GetById/{ProductID} - Will return a single product (If the ID is valid, else will complain).
 
 # Shopping Cart Controller
@@ -29,7 +30,9 @@ Get Cart
 https://localhost:7101/ShoppingCart/GetShoppingCart - Will return the current state of the shopping cart
 
 Add to Cart
-https://localhost:7101/ShoppingCart/AddItemToCart?productId={ProductID}&quantity={Quantity} - Will add the item with specified quantity. Quantity does not need to be specified, if it is not, then 1 Stock Item will be added to the ShoppingCart. If the item already exists in the Shopping Cart, the given quantity (or 1 if no quantity specified) will be increased to the cart
+https://localhost:7101/ShoppingCart/AddItemToCart?productId={ProductID}&quantity={Quantity} - 
+
+Will add the item with specified quantity. Quantity does not need to be specified, if it is not, then 1 Stock Item will be added to the ShoppingCart. If the item already exists in the Shopping Cart, the given quantity (or 1 if no quantity specified) will be increased to the cart
 
 Remove Quantity From Cart
 https://localhost:7101/ShoppingCart/RemoveItemQuantityFromCart/{ProductID}?quantity={quantity}
@@ -38,16 +41,26 @@ Remove All of an Item from Cart
 https://localhost:7101/ShoppingCart/RemoveItemFromCart/{ProductID}
 
 # List of endpoints with queries to hit in this order for a quick test.
-https://localhost:7101/Product/GetAll - Get all products 
+https://localhost:7101/Product/GetAll - Get all products
+
 https://localhost:7101/Product/GetById/48d57da5-ec8d-463c-a25a-12f989d68c8c - Get a single product
-https://localhost:7101/ShoppingCart/GetShoppingCart 
+
+https://localhost:7101/ShoppingCart/GetShoppingCart
+
 https://localhost:7101/ShoppingCart/AddItemToCart?productId=48d57da5-ec8d-463c-a25a-12f989d68c8c&quantity=5 - Add a product to the cart (5 Times)
+
 https://localhost:7101/ShoppingCart/GetShoppingCart
+
 https://localhost:7101/ShoppingCart/AddItemToCart?productId=48d57da5-ec8d-463c-a25a-12f989d68c8c - Add just one of the items to the cart
+
 https://localhost:7101/ShoppingCart/GetShoppingCart
+
 https://localhost:7101/ShoppingCart/RemoveItemQuantityFromCart/48d57da5-ec8d-463c-a25a-12f989d68c8c?quantity=2 - Remove two of that item from the cart
+
 https://localhost:7101/ShoppingCart/GetShoppingCart
+
 https://localhost:7101/ShoppingCart/RemoveItemFromCart/48d57da5-ec8d-463c-a25a-12f989d68c8c - Remove the item from the cart completely
+
 https://localhost:7101/ShoppingCart/GetShoppingCart
 
 # Assumptions made about broader requirements
