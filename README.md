@@ -39,10 +39,13 @@ There are two controllers created: `ProductController` and `ShoppingCartControll
 - **[POST]** `/ShoppingCart/AddItemToCart?productId={ProductID}&quantity={Quantity}`  
   Will add the specified quantity of an item to the shopping cart. If the quantity is not specified, it defaults to 1. If the item already exists in the cart, the quantity will be increased accordingly.
 
-- **[PATCH]** `/ShoppingCart/RemoveItemQuantityFromCart/{ProductID}?quantity={Quantity}`  
+- **[POST]** `/ShoppingCart/RemoveItemQuantityFromCart/{ProductID}?quantity={Quantity}`  
   Will remove the specified quantity of an item from the shopping cart.
 
 - **[DELETE]** `/ShoppingCart/RemoveItemFromCart/{ProductID}`  
+  Will remove all of an item from the cart.
+
+- **[DELETE]** `/ShoppingCart/ClearCart/{ProductID}`  
   Will remove all of an item from the cart.
 
 ## List of Endpoints with Queries to Test in Order
