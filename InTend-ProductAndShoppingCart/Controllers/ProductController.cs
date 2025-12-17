@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InTend_ProductAndShoppingCart.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[Action]")]
 public class ProductController : ControllerBase
 {
     private readonly ILogger<ProductController> _logger;

@@ -8,12 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InTend-ProductAndShoppingCart.Business\InTend-ProductAndShoppingCart.Business.csproj" />
-    <ProjectReference Include="..\InTend-ProductAndShoppingCart.Common\InTend-ProductAndShoppingCart.Common.csproj" />
+    <Compile Remove="DataModels\**" />
+    <EmbeddedResource Remove="DataModels\**" />
+    <None Remove="DataModels\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataModels\" />
+    <ProjectReference Include="..\InTend-ProductAndShoppingCart.Business\InTend-ProductAndShoppingCart.Business.csproj" />
+    <ProjectReference Include="..\InTend-ProductAndShoppingCart.Common\InTend-ProductAndShoppingCart.Common.csproj" />
   </ItemGroup>
 
 </Project>

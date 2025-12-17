@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InTend_ProductAndShoppingCart.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[Action]")]
 public class ShoppingCartController : ControllerBase
 {
     private readonly ILogger<ShoppingCartController> _logger;
@@ -79,6 +79,21 @@ public class ShoppingCartController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error retrieving product with ID {ProductId}", productId);
+            return StatusCode(500, new { error = "An unexpected error occurred." });
+        }
+    }
+
+    [HttpDelete]
+    public IActionResult ClearCart()
+    {
+        try
+        {
+            _shoppingCartApi.ClearCart();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error clearing the shopping cart");
             return StatusCode(500, new { error = "An unexpected error occurred." });
         }
     }

@@ -2,7 +2,8 @@
 {
     public record ShoppingCartItem(
         Product Product,
-        int Quantity
+        int Quantity,
+        decimal SubTotal
     );
 
     public record ShoppingCart(

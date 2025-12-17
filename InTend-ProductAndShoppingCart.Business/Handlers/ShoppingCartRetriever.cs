@@ -24,7 +24,7 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
             {
                 if (_productLookup.TryGetValue(item.Key, out var product))
                 {
-                    shoppingCartItems.Add(new ShoppingCartItem(product, item.Value));
+                    shoppingCartItems.Add(new ShoppingCartItem(product, item.Value, product.Price * item.Value));
                 }
             }
 
