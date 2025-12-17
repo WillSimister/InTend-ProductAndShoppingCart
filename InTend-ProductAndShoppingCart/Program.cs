@@ -10,6 +10,8 @@ builder.Services.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>()
 builder.Services.AddScoped<ProductApi>();
 builder.Services.AddScoped<ShoppingCartApi>();
 
+ProductRepository.Instance.PopulateProducts();
+
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

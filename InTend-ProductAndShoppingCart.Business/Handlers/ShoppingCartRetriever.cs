@@ -18,18 +18,18 @@ namespace InTend_ProductAndShoppingCart.Business.Handlers
         {
             var cartContents = _shoppingCartRepository.GetCartContents();
 
-            var shoppingCartItems = new Dictionary<Product, int>();
+            var shoppingCartItems = new List<ShoppingCartItem>();
 
             foreach (var item in cartContents)
             {
                 if (_productLookup.TryGetValue(item.Key, out var product))
                 {
-                    shoppingCartItems[product] = item.Value;
+                    shoppingCartItems.Add(new ShoppingCartItem(product, item.Value));
                 }
             }
 
-            int totalProducts = shoppingCartItems.Values.Sum();
-            decimal totalPrice = shoppingCartItems.Sum(item => item.Key.Price * item.Value);
+            int totalProducts = shoppingCartItems.Sum(i => i.Quantity);
+            decimal totalPrice = shoppingCartItems.Sum(i => i.Product.Price * i.Quantity);
 
             return new ShoppingCart(shoppingCartItems, totalProducts, totalPrice);
         }

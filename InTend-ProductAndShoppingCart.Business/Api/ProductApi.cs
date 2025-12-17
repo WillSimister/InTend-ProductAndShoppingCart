@@ -32,18 +32,18 @@ namespace InTend_ProductAndShoppingCart.Business.Api
             return product;
         }
 
-        internal int GetProductStockQuantity(Guid productId)
+        public int GetProductStockQuantity(Guid productId)
         {
             return _productRetriever.GetProductStock(productId);
         }
 
-        internal void IncreaseProductStock(Guid productId, int stockToAdd)
+        public void IncreaseProductStock(Guid productId, int stockToAdd)
         {
             Validation.ProductInputValidator.ValidateId(productId);
             _productHandler.increaseProductStock(productId, stockToAdd);
         }
 
-        internal void DecreaseProductStock(Guid productId, int stockToRemove)
+        public void DecreaseProductStock(Guid productId, int stockToRemove)
         {
             _productHandler.DecreaseProductStock(productId, stockToRemove);
         }

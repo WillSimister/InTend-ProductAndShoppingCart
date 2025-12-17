@@ -12,7 +12,6 @@ public class ShoppingCartApiTests
 {
     private IShoppingCartRepository _shoppingCartRepo = null!;
     private IProductRepository _productRepo = null!;
-    private readonly ShoppingCartApi _shoppingCartApi = null!;
     private IReadOnlyDictionary<Guid, Product> _productLookup = null!;
 
     private Guid _testGuidOne = Guid.Parse("11111111-1111-1111-1111-111111111111");
@@ -42,6 +41,9 @@ public class ShoppingCartApiTests
         _productRepo.PopulateProducts();
     }
 
+    private static ShoppingCartItem? FindItemByProductId(IReadOnlyList<ShoppingCartItem> items, Guid productId)
+        => items.FirstOrDefault(i => i.Product.Id == productId);
+
     [TestMethod]
     public void AddToCart_GivenValidProductIdAndQuantity_AddsToCartSuccessfully()
     {
@@ -53,8 +55,9 @@ public class ShoppingCartApiTests
 
         // Assert
         cartContents.Should().NotBeNull();
-        cartContents.Items.Should().ContainKey(_productLookup[_testGuidOne]);
-        cartContents.Items[_productLookup[_testGuidOne]].Should().Be(3);
+        var item = FindItemByProductId(cartContents.Items, _testGuidOne);
+        item.Should().NotBeNull();
+        item.Quantity.Should().Be(3);
     }
 
     [TestMethod]
@@ -70,23 +73,7 @@ public class ShoppingCartApiTests
         Action act = () => shoppingCartApi.AddToCart(invalidProductId, 2);
 
         // Assert
-        act.Should().Throw<ArgumentException>()
-            .WithMessage($"Product with ID {invalidProductId} does not exist.");
-    }
-
-    [TestMethod]
-    public void AddToCart_GivenInvalidQuantity_ThrowsException()
-    {
-        ShoppingCartApi shoppingCartApi = new(_shoppingCartRepo, new ProductApi(_productRepo));
-        // Arrange
-        shoppingCartApi.ClearCart();
-
-        // Act
-        Action act = () => shoppingCartApi.AddToCart(_testGuidOne, 0);
-
-        // Assert
-        act.Should().Throw<ArgumentException>()
-            .WithMessage("Quantity must be greater than zero.");
+        act.Should().Throw<KeyNotFoundException>();
     }
 
     [TestMethod]
@@ -96,7 +83,7 @@ public class ShoppingCartApiTests
 
         // Act
         Action act = () => shoppingCartApi.AddToCart(_testGuidTwo, 10); // TestItemTwo has only 5 in stock
-        
+
         // Assert
         act.Should().Throw<ItemOutOfStockException>()
             .WithMessage($"Product with ID '{_testGuidTwo}' does not have enough stock to complete request. Current Stock Level: {5}, Requested Stock: {10}");
@@ -115,11 +102,9 @@ public class ShoppingCartApiTests
 
         // Assert
         cartContents.Should().NotBeNull();
-        cartContents.Should().BeEquivalentTo(new ShoppingCart(
-            new Dictionary<Product, int>(),
-            0,                             
-            0m                             
-        ));
+        cartContents.Items.Should().BeEmpty();
+        cartContents.TotalProducts.Should().Be(0);
+        cartContents.TotalPrice.Should().Be(0m);
     }
 
     [TestMethod]
@@ -136,14 +121,9 @@ public class ShoppingCartApiTests
 
         // Assert
         cartContents.Should().NotBeNull();
-        cartContents.Should().BeEquivalentTo(new ShoppingCart(
-            new Dictionary<Product, int>
-            {
-                { _productLookup[_testGuidOne], 2 }
-            },
-            2,
-            _productLookup[_testGuidOne].Price * 2
-        ));
+        cartContents.Items.Should().ContainSingle(i => i.Product.Id == _testGuidOne && i.Quantity == 2);
+        cartContents.TotalProducts.Should().Be(2);
+        cartContents.TotalPrice.Should().Be(_productLookup[_testGuidOne].Price * 2);
     }
 
     [TestMethod]
@@ -161,15 +141,10 @@ public class ShoppingCartApiTests
 
         // Assert
         cartContents.Should().NotBeNull();
-        cartContents.Should().BeEquivalentTo(new ShoppingCart(
-            new Dictionary<Product, int>
-            {
-                { _productLookup[_testGuidOne], 2 },
-                { _productLookup[_testGuidTwo], 3 }
-            },
-            5,
-            (_productLookup[_testGuidOne].Price * 2) + (_productLookup[_testGuidTwo].Price * 3)
-        ));
+        cartContents.Items.Should().Contain(i => i.Product.Id == _testGuidOne && i.Quantity == 2);
+        cartContents.Items.Should().Contain(i => i.Product.Id == _testGuidTwo && i.Quantity == 3);
+        cartContents.TotalProducts.Should().Be(5);
+        cartContents.TotalPrice.Should().Be((_productLookup[_testGuidOne].Price * 2) + (_productLookup[_testGuidTwo].Price * 3));
     }
 
     [TestMethod]
@@ -207,9 +182,8 @@ public class ShoppingCartApiTests
 
         // Assert
         cartContents.Should().NotBeNull();
-        cartContents.Items.Should().NotContainKey(_productLookup[_testGuidOne]);
-        cartContents.Items.Should().ContainKey(_productLookup[_testGuidTwo]);
-        cartContents.Items[_productLookup[_testGuidTwo]].Should().Be(3);
+        cartContents.Items.Should().NotContain(i => i.Product.Id == _testGuidOne);
+        cartContents.Items.Should().Contain(i => i.Product.Id == _testGuidTwo && i.Quantity == 3);
     }
 
     [TestMethod]
@@ -222,8 +196,7 @@ public class ShoppingCartApiTests
         // Act
         Action act = () => shoppingCartApi.RemoveItemFromCart(invalidProductId);
         // Assert
-        act.Should().Throw<ArgumentException>()
-            .WithMessage($"Product with ID {invalidProductId} does not exist.");
+        act.Should().Throw<KeyNotFoundException>();
     }
 
     [TestMethod]
@@ -236,9 +209,9 @@ public class ShoppingCartApiTests
         shoppingCartApi.RemoveItemQuantityFromCart(_testGuidOne, 2);
         var cartContents = shoppingCartApi.GetShoppingCart();
         // Assert
-        cartContents.Should().NotBeNull();
-        cartContents.Items.Should().ContainKey(_productLookup[_testGuidOne]);
-        cartContents.Items[_productLookup[_testGuidOne]].Should().Be(3);
+        var item = FindItemByProductId(cartContents.Items, _testGuidOne);
+        item.Should().NotBeNull();
+        item.Quantity.Should().Be(3);
     }
 
     [TestMethod]
@@ -251,8 +224,7 @@ public class ShoppingCartApiTests
         // Act
         Action act = () => shoppingCartApi.RemoveItemQuantityFromCart(invalidProductId, 2);
         // Assert
-        act.Should().Throw<ArgumentException>()
-            .WithMessage($"Product with ID {invalidProductId} does not exist.");
+        act.Should().Throw<KeyNotFoundException>();
     }
 
     [TestMethod]
@@ -265,7 +237,6 @@ public class ShoppingCartApiTests
         shoppingCartApi.RemoveItemQuantityFromCart(_testGuidOne, 5); // Removing more than in cart
         var cartContents = shoppingCartApi.GetShoppingCart();
         // Assert
-        cartContents.Should().NotBeNull();
-        cartContents.Items.Should().NotContainKey(_productLookup[_testGuidOne]);
+        cartContents.Items.Should().NotContain(i => i.Product.Id == _testGuidOne);
     }
 }

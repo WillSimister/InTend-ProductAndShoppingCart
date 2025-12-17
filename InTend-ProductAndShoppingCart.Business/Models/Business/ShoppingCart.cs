@@ -1,7 +1,13 @@
 ﻿namespace InTend_ProductAndShoppingCart.Business.Models.Business
 {
-    public record ShoppingCart (
-        Dictionary<Product, int> Items,
+    public record ShoppingCartItem(
+        Product Product,
+        int Quantity
+    );
+
+    public record ShoppingCart(
+        IReadOnlyList<ShoppingCartItem> Items,
         int TotalProducts,
-        decimal TotalPrice);
+        decimal TotalPrice
+    );
 }
